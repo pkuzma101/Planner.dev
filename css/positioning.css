@@ -2,36 +2,87 @@ h1 {
 	color: purple;
 	text-decoration: underline;
 }
+
+#borders {
+	border: 1px solid white;
+	width: 350px;
+	height: 300px;
+	position: relative;
+}
 .box {
 	border: 1px solid black;
-	width: 72px;
-	height: 72px;
+	width: 50px;
+	height: 50px;
 	padding: 10px;
 	font-family: Helvetica;
 	font-weight: bold;
 	color: white;
-	margin-bottom: 50px;
+	margin-top: 50px;
 }
 #red {
 	background-color: #c71010;
+	float: left;
 }
 #orange {
-	margin-left: 30px;
+	float: left;
 	background-color: orange;
+	margin-left: 50px;
+
 }
 #yellow {
-	margin-left: 60px;
 	background-color: yellow;
+	float: left;
+	margin-left: 50px;
+
 }
 #green {
-	margin-left: 90px;
+	float: left;
 	background-color: green;
 }
 #blue {
-	margin-left: 120px;
+	float: left;
+	margin-left: 50px;
 	background-color: blue;
 }
 #lavender {
-	margin-left: 150px;
+	float: left;
+	margin-left: 50px;
 	background-color: #ff00ff;
+
+}
+
+#logo1 {
+	position: absolute;
+	margin-left: 50px;
+	margin-top: 10px;
+}
+
+#logo2 {
+	position: absolute;
+	margin-left: 175px;
+	margin-top: 10px;
+}
+
+#logo3 {
+	position: absolute;
+	margin-left: 295px;
+	margin-top: 10px;
+}
+
+#logo4 {
+	position: absolute;
+	margin-left: 50px;
+	margin-top: 135px;
+}
+
+#logo5 {
+	position: absolute;
+	margin-top: 135px;
+	margin-left: 170px;
+}
+
+#logo6 {
+	position: absolute;
+	margin-top: 135px;
+	margin-left: 295px;
 }
