@@ -51,37 +51,37 @@ h1 {
 
 }
 
-#logo1 {
+#logoRed {
 	position: absolute;
 	margin-left: 50px;
 	margin-top: 10px;
 }
 
-#logo2 {
+#logoOrange {
 	position: absolute;
 	margin-left: 175px;
 	margin-top: 10px;
 }
 
-#logo3 {
+#logoYellow {
 	position: absolute;
 	margin-left: 295px;
 	margin-top: 10px;
 }
 
-#logo4 {
+#logoGreen {
 	position: absolute;
 	margin-left: 50px;
 	margin-top: 135px;
 }
 
-#logo5 {
+#logoBlue {
 	position: absolute;
 	margin-top: 135px;
 	margin-left: 170px;
 }
 
-#logo6 {
+#logoLavender {
 	position: absolute;
 	margin-top: 135px;
 	margin-left: 295px;
