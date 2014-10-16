@@ -1,0 +1,30 @@
+
+
+h1, h2, h3 {
+	color: #b20000;
+	text-decoration: underline;
+	font-family: monospace;
+	text-align: center;
+}
+
+body {
+	background-image: url(http://img1.wikia.nocookie.net/__cb20121226163012/dynastywarriors/images/d/d5/WO3-Ryu_Hayabusa.png);
+	background-repeat: repeat;
+}
+
+ul {
+	color: white;
+	list-style-type: circle;
+	text-align: center;
+	list-style-position: inside;
+	font-family: fantasy;
+}
+
+form {
+	text-align: center;
+}
+
+button {
+	font-family: Century;
+	text-align: center;
+}

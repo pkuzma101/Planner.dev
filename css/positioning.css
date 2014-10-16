@@ -1,0 +1,37 @@
+h1 {
+	color: purple;
+	text-decoration: underline;
+}
+.box {
+	border: 1px solid black;
+	width: 72px;
+	height: 72px;
+	padding: 10px;
+	font-family: Helvetica;
+	font-weight: bold;
+	color: white;
+	margin-bottom: 50px;
+}
+#red {
+	background-color: #c71010;
+}
+#orange {
+	margin-left: 30px;
+	background-color: orange;
+}
+#yellow {
+	margin-left: 60px;
+	background-color: yellow;
+}
+#green {
+	margin-left: 90px;
+	background-color: green;
+}
+#blue {
+	margin-left: 120px;
+	background-color: blue;
+}
+#lavender {
+	margin-left: 150px;
+	background-color: #ff00ff;
+}
