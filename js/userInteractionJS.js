@@ -3,7 +3,7 @@
 
 	do {
 		var answer = prompt("What is your name?");
-	} while (answer == "");
+	} while (answer == "" || answer == null);
 // todo: Show an alert message that welcomes the user based on their input.
 alert("Hello, " + answer);
 // todo: Ask the user if they like pizza.
