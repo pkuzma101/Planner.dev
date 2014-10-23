@@ -1,0 +1,82 @@
+<html>
+<head>
+    <title>A Park Apart</title>
+</head>
+<body>
+ 
+    <h1>300 Million Years of Tradition</h1>
+ 
+</body>
+<script type="text/javascript">
+    // You've just been hired as a junior web developer at a park.  A park unlike any other.  And in this park, we have a particular kind of attraction - one the world has not seen in some time...
+ 
+    // Your new boss, Nedry, has tasked you with some JSON related work.
+ 
+    // Create an object called Dinosaur.  
+var dinosaur = [{
+                    "species": "Allosaurus",
+                    "genus": "Theropod",
+                    "nickname": "Walter",
+                    "adjective": "loud",
+                    "predator": true,
+                    "foods": ["viet cong", "pacifists", "beer", "peanuts"],
+                    "age": 30
+                },
+                {
+                   "species": "Apatosaurus",
+                    "genus": "Sauropod",
+                    "nickname": "Jeffrey",
+                    "adjective": "mellow",
+                    "predator": false,
+                    "foods": ["plants", "vodka", "kahlua", "cream"],
+                    "age": 25 
+                },
+                {
+                   "species": "Diplodocus",
+                    "genus": "Sauropod",
+                    "nickname": "Donny",
+                    "adjective": "dense",
+                    "predator": false,
+                    "foods": ["plants", "leaves", "beer", "radishes"],
+                    "age": 24 
+                }
+               ];
+
+    // This object should have the following properties, with a relevant data types:
+    /*      -- species, genus, nickname, descriptive adjective reflective of that dinosaur's personality.
+            -- method 'trample' -> which when called, issues an ALERT that says "Watch Out!  <nickname> is on the loose!".  If the dinosaur is a predator, it should say "Rawrrr!  <nickname> is on a rampage!"
+            -- predator (boolean), true or false
+            -- an array of favorite foods.
+            -- age
+    */
+        var count;
+
+        dinosaur.forEach(function(element, index, array) {
+            var count = index + 1;
+            console.log("Dinosaur " + count + ":" + " " + element['nickname'] + ", a " + element['adjective'] +  " " + element['genus'] + " " + element['species'] + ", is " + element['age'] + " years old.");
+            console.log("His favorite foods are " + element.foods[0] + "," + " " + element.foods[1] + "," + " " + element.foods[2] + "," + " " + "and" + " " + element.foods[3] +  ".");
+            if(element.predator == false) {
+                alert("Watch out!  " + element['nickname'] + " " + "is on the loose!");
+            }
+            else if(element.predator == true) {
+                alert("Rawrrr!  " + element['nickname'] + " " + "is on a rampage!");
+            }
+        });
+    // The output should look like this:
+    /*
+        
+        Dinosaur #:
+        <nickname>, a <descriptive adjective> <genus> <species>, is <age> years old.  
+        Their favorite foods are: <favorite foods>.
+        Then call the trample method for that dinosaur.
+ 
+    */
+ 
+    // At the end of this assignment, you should have ATLEAST three dinosaurs.  Try putting them all in an array, and looping through them!
+ 
+    // Output the dinosaurs in alphabetical order, according to nickname.
+ 
+    // Remember the keyword: "this".
+ 
+</script>
+</html>
