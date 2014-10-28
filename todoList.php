@@ -25,7 +25,15 @@ $items = [];
 //     return $input;
 //  }
 
+function sanitize($items) {
+	foreach ($items as $key => $value) {
+		$items[$key] = htmlspecialchars(strip_tags($value));
+	}
+	return $items;
+}
+
 function saveFile($items, $filename = './data/items.txt') {
+	$array = sanitize($items);
     $handle = fopen($filename, "w");
     $string = implode("\n", $items);
         fwrite($handle, $string);
@@ -90,9 +98,9 @@ if(isset($_POST['add'])) {
 		<h1>TODO List</h1>
 		<div>
 			<ul>
-				<? foreach($items as $key => $value) {  ?>
-				<li><? echo $value; ?> | <a href="?id=<?php echo $key; ?>"> done </a></li>
-				<? } ?>
+				<? foreach($items as $key => $value):  ?>
+				<li><?= htmlspecialchars(strip_tags($value)); ?> | <a href="?id=<?php echo $key; ?>"> done </a></li>
+				<? endforeach ?>
 			</ul>
 		</div>
 		<div>
