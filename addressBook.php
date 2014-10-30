@@ -1,23 +1,44 @@
 <?php
 // Establish file where info will be saved
-$filename = 'data/addressBook.csv';
+// $filename = 'data/addressBook.csv';
 
-// Open the file and place the pointer at the beginning of the file
-$handle = fopen($filename, 'r');
+function readFromFile($filename = 'data/addressBook.csv') {
 
-// Establish the array that will become the contacts table
-$addresses = [];
+	$addresses = [];
 
-// 
-while(!feof($handle)) {
-	$row = fgetcsv($handle);
+	// Open the file and place the pointer at the beginning of the file
+	$handle = fopen($filename, 'r');
+	// while not at the end of the $handle pointer, get data from the data/addressBook.csv
+	while(!feof($handle)) {
+		$row = fgetcsv($handle);
 
-	if(!empty($row)) {
-		$addresses[] = $row;
+		if(!empty($row)) {
+			$addresses[] = $row;
+		}
 	}
+
+
+	fclose($handle);
+	return $addresses;
+
+}
+// Establish the array that will become the contacts table
+$addresses = readFromFile();
+
+function saveFile($addresses, $filename = 'data/addressBook.csv') {
+	$handle = fopen($filename, 'w');
+	foreach($addresses as $row) {
+	fputcsv($handle, $row);
+	}
+
+	fclose($handle);
 }
 
-fclose($handle);
+if(isset($_GET['id'])) {
+	$id = $_GET['id'];
+	unset($addresses[$id]);
+	saveFile($addresses, $filename = 'data/addressBook.csv');
+}
 
 if($_POST) {
 
@@ -26,7 +47,7 @@ if($_POST) {
 		echo "Please fill all fields.";
 	}
 
-	// If they are all filled
+	// If they are all filled, add info from form into a new array
 	else {
 
 	if(isset($_POST['name'])) {
@@ -50,17 +71,16 @@ if($_POST) {
 
 	// Takes all the form info just entered and pushes it onto the original array 
 	$addresses[] = $newEntry;
+	saveFile($addresses);
 }
 }
 
-$handle = fopen('addressBook.csv', 'w');
 
-foreach($addresses as $row) {
-	fputcsv($handle, $row);
-}
 
-fclose($handle);
+// Opens csv file that this page is using for the address book
+// $handle = fopen('data/addressBook.csv', 'w');
 
+// Takes info from the array and puts it onto the csv file
 ?>
 
 <html lang='en'>
@@ -86,6 +106,7 @@ fclose($handle);
 				<th>State</th>
 				<th>Zip</th>
 				<th>Phone</th>
+				<th></th>
 			</tr>
 			<!-- converts the original, multidimensional array into its seperate, smaller arrays -->
 			<? foreach($addresses as $key => $contact): ?>
@@ -93,8 +114,11 @@ fclose($handle);
 				<!-- converts the array values into strings that I can manipulate and use -->
 					<? foreach($contact as $value): ?>
 					<!-- Puts array values into the table -->
-						<td><?= $value; ?></td>
+						<td><?= htmlspecialchars(strip_tags($value)); ?></td>
 					<? endforeach; ?>
+						<td>
+					    	<a href="?id=<?= $key ?>" class='btn btn-danger'>Remove</button>		
+						</td>
 				</tr>
 			<? endforeach; ?>
 			
@@ -129,6 +153,7 @@ fclose($handle);
 				<input id="contact" name="phone" type="text" placeholder="phone">
 			</p>
 			<p>
+				<!-- Creates button used to add new contact info -->
 				<button type="submit" class="btn btn-primary">Add Contact</button>
 			</p>
 		</form>

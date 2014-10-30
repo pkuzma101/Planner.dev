@@ -7,24 +7,6 @@ $items = [];
 	array_push($items, $value);
 }
 
-// function listItems($items) {
-//     $string = "";
-//     foreach($items as $key => $item) {
-//         $key++;
-//         $string .="<li>[{$key}] {$item} </li>";
-//     }
-
- //    return $string;
- // }
-
-// function getInput($upper = false) {
-//     $input = trim(fgets(STDIN));
-//         if($upper == true) {
-//             $input = strtoupper($input);
-//         }
-//     return $input;
-//  }
-
 function sanitize($items) {
 	foreach ($items as $key => $value) {
 		$items[$key] = htmlspecialchars(strip_tags($value));
@@ -92,20 +74,25 @@ if(isset($_POST['add'])) {
 <html>
 	<head>
 		<title>TODO List</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Josefin+Sans:400,400italic' rel='stylesheet' type='text/css'>
+		<link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" type="text/css" href="/css/site.css">
 	</head>
 	<body>
 		<h1>TODO List</h1>
 		<div>
-			<ul>
+			<ul class='text-center'>
 				<? foreach($items as $key => $value):  ?>
 				<li><?= htmlspecialchars(strip_tags($value)); ?> | <a href="?id=<?php echo $key; ?>"> done </a></li>
+
 				<? endforeach ?>
 			</ul>
 		</div>
 		<div>
 			<h3>Add Item to the List</h3>
-				<form method="POST" action="/todoList.php">
+				<form method="POST" action="/todoList.php" id="addItem">
 					<p>
 						<input id="add" name="add" type="text" placeholder="Task to Add">
 					</p>
@@ -113,12 +100,12 @@ if(isset($_POST['add'])) {
 						<button type="submit">Add Item</button>
 					</p>
 				</form>
-				<form method="POST" enctype="multipart/form-data">
+				<form method="POST" enctype="multipart/form-data" class='form-inline' role="form">
 					<p>
 						<label for="file1">File to Upload: </label>
-						<input type="file" id="file1" name="file1">
+						<input type="file" class="form-control" id="file1" name="file1">
 					</p>
-					<p>
+					<p id="uploadButton">
 						<input type="submit" value="Upload">
 					</p>
 					<p>
@@ -132,5 +119,6 @@ if(isset($_POST['add'])) {
 					</p>
 				</form>
 		</div>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 	</body>
 </html>
