@@ -1,0 +1,27 @@
+.form-horizontal {
+	margin-left: 30px;
+	color: orange;
+	font-family: 'Indie Flower', cursive;
+}
+
+body {
+	background-image: url(../images/sunset.jpg);
+}
+
+h1 {
+	font-family: Montserrat;
+	color: 6ccf55;
+	margin-left: 20px;
+	text-shadow: 4px 4px 4px #aaa;
+}
+
+h2 {
+	font-family: Lora;
+	text-shadow: 8px 8px 8px #471603;
+}
+
+.table-hover {
+	color: white;
+	background-color: 282911;
+	font-family: 'Patrick Hand' cursive;
+}
