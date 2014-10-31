@@ -1,50 +1,56 @@
 <?php
-// Establish file where info will be saved
-// $filename = 'data/addressBook.csv';
 
-function readFromFile($filename = 'data/addressBook.csv') {
+class addressDataStore {
+	public $filename = 'data/addressBook.csv';
 
-	$addresses = [];
+	public $addresses = [];
 
+	public function readAddressBook($filename = 'data/addressBook.csv') {
+		$addresses = [];
 	// Open the file and place the pointer at the beginning of the file
-	$handle = fopen($filename, 'r');
-	// while not at the end of the $handle pointer, get data from the data/addressBook.csv
-	while(!feof($handle)) {
-		$row = fgetcsv($handle);
-
-		if(!empty($row)) {
-			$addresses[] = $row;
+		$handle = fopen($this->filename, 'r');
+		// while not at the end of the $handle pointer, get data from the data/addressBook.csv
+		while(!feof($handle)) {
+			$row = fgetcsv($handle);
+			if(!empty($row)) {
+				$addresses[] = $row;
+			}
 		}
+		fclose($handle);
+		$this->addresses = $addresses;
+		return $addresses;
 	}
 
-
-	fclose($handle);
-	return $addresses;
-
+	public function writeAddressBook($items) {
+		$handle = fopen($this->filename, 'w');
+		foreach($items as $row) {
+			fputcsv($handle, $row);
+		}
+		fclose($handle);
+	}
 }
+
+// Establish file where info will be saved
+
+// Create a new object $addressBook
+$addressBook = new addressDataStore();
+$allItems = $addressBook->readAddressBook();
+
+$error = "Please fill out all fields.";
 // Establish the array that will become the contacts table
-$addresses = readFromFile();
 
-function saveFile($addresses, $filename = 'data/addressBook.csv') {
-	$handle = fopen($filename, 'w');
-	foreach($addresses as $row) {
-	fputcsv($handle, $row);
-	}
-
-	fclose($handle);
-}
-
+// Provides method for removing contacts
 if(isset($_GET['id'])) {
 	$id = $_GET['id'];
-	unset($addresses[$id]);
-	saveFile($addresses, $filename = 'data/addressBook.csv');
+	unset($allItems[$id]);
+	$addressBook->writeAddressBook($allItems);
 }
 
 if($_POST) {
 
 	// Check to see if any of the input forms are empty
 	if(empty($_POST['name']) || empty($_POST['address']) || empty($_POST['city']) || empty($_POST['state']) || empty($_POST['zip']) || empty($_POST['phone'])) {
-		echo "Please fill all fields.";
+		 echo $error;
 	}
 
 	// If they are all filled, add info from form into a new array
@@ -70,17 +76,14 @@ if($_POST) {
 	}
 
 	// Takes all the form info just entered and pushes it onto the original array 
-	$addresses[] = $newEntry;
-	saveFile($addresses);
+	
+		$allItems[] = $newEntry;
+
+		$addressBook->writeAddressBook($allItems);
+
+	}
 }
-}
 
-
-
-// Opens csv file that this page is using for the address book
-// $handle = fopen('data/addressBook.csv', 'w');
-
-// Takes info from the array and puts it onto the csv file
 ?>
 
 <html lang='en'>
@@ -109,19 +112,16 @@ if($_POST) {
 				<th></th>
 			</tr>
 			<!-- converts the original, multidimensional array into its seperate, smaller arrays -->
-			<? foreach($addresses as $key => $contact): ?>
+			<? foreach($allItems as $key => $contact): ?>
 				<tr>
-				<!-- converts the array values into strings that I can manipulate and use -->
-					<? foreach($contact as $value): ?>
-					<!-- Puts array values into the table -->
-						<td><?= htmlspecialchars(strip_tags($value)); ?></td>
+				 <? foreach($contact as $value): ?>
+					<td><?= htmlspecialchars(strip_tags($value)); ?></td>
 					<? endforeach; ?>
-						<td>
-					    	<a href="?id=<?= $key ?>" class='btn btn-danger'>Remove</button>		
-						</td>
+					<td>
+					    <a href="?id=<?= $key ?>" class='btn btn-danger'>Remove</a>		
+					</td>
+					<? endforeach; ?>
 				</tr>
-			<? endforeach; ?>
-			
 		</table>
 		
 		<!-- Form for new contact begins here -->
