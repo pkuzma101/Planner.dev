@@ -1,49 +1,50 @@
 <?php
 
-class addressDataStore {
-	public $filename = 'data/addressBook.csv';
-
-	public $addresses = [];
-
-	public function readAddressBook($filename = 'data/addressBook.csv') {
-		$addresses = [];
-	// Open the file and place the pointer at the beginning of the file
-		$handle = fopen($this->filename, 'r');
-		// while not at the end of the $handle pointer, get data from the data/addressBook.csv
-		while(!feof($handle)) {
-			$row = fgetcsv($handle);
-			if(!empty($row)) {
-				$addresses[] = $row;
-			}
-		}
-		fclose($handle);
-		$this->addresses = $addresses;
-		return $addresses;
-	}
-
-	public function writeAddressBook($items) {
-		$handle = fopen($this->filename, 'w');
-		foreach($items as $row) {
-			fputcsv($handle, $row);
-		}
-		fclose($handle);
-	}
-}
+include '../inc/addressDataStore.php';
 
 // Establish file where info will be saved
 
 // Create a new object $addressBook
 $addressBook = new addressDataStore();
-$allItems = $addressBook->readAddressBook();
+
+$addressBook->addresses = $addressBook->readAddressBook();
 
 $error = "Please fill out all fields.";
+
+if(count($_FILES) > 0 && $_FILES['file1']['error'] == UPLOAD_ERR_OK) {
+	// Create new object
+	// Set that new object's filename 
+	// Read from that filename
+	// Merge that object's addresses with the original object's addresses
+	
+	// Set the destination directory for uploads
+	$uploadDir = '/vagrant/sites/planner.dev/public/data/';
+
+	// Grab the filename from the uploaded file by using basename
+	$filename = basename($_FILES['file1']['name']);
+
+	// Create the saved filename using the file's original name and our upload directory
+	$savedFilename = $uploadDir . $filename;
+
+	// Move the file from the temp location to our uploads directory
+	move_uploaded_file($_FILES['file1']['tmp_name'], $savedFilename);
+	// Create new instance of object, give it the name $newAddressBook
+	$newAddressBook = new addressDataStore($filename);
+	// Call the read function 
+	$newAddressBook->addresses = $newAddressBook->readAddressBook();
+	// Merge the $addresses variable from both objects
+	$addressBook->addresses = array_merge($addressBook->addresses, $newAddressBook->addresses);
+	$addressBook->writeAddressBook();
+
+}
+
 // Establish the array that will become the contacts table
 
 // Provides method for removing contacts
 if(isset($_GET['id'])) {
 	$id = $_GET['id'];
-	unset($allItems[$id]);
-	$addressBook->writeAddressBook($allItems);
+	unset($addressBook->addresses[$id]);
+	$addressBook->writeAddressBook();
 }
 
 if($_POST) {
@@ -77,9 +78,8 @@ if($_POST) {
 
 	// Takes all the form info just entered and pushes it onto the original array 
 	
-		$allItems[] = $newEntry;
-
-		$addressBook->writeAddressBook($allItems);
+		$addressBook->addresses[] = $newEntry;
+		$addressBook->writeAddressBook();
 
 	}
 }
@@ -90,7 +90,7 @@ if($_POST) {
 	<head>
 		<title>Address Book</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-		<link href="font-awesome-4.1.0/css/fonts/" rel="stylesheet" type="text/css">
+		<!-- <link href="font-awesome-4.1.0/css/fonts/" rel="stylesheet" type="text/css"> -->
 	    <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
 	    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 	    <link href='http://fonts.googleapis.com/css?family=Patrick+Hand|Indie+Flower' rel='stylesheet' type='text/css'>
@@ -112,7 +112,7 @@ if($_POST) {
 				<th></th>
 			</tr>
 			<!-- converts the original, multidimensional array into its seperate, smaller arrays -->
-			<? foreach($allItems as $key => $contact): ?>
+			<? foreach($addressBook->addresses as $key => $contact): ?>
 				<tr>
 				 <? foreach($contact as $value): ?>
 					<td><?= htmlspecialchars(strip_tags($value)); ?></td>
@@ -155,6 +155,24 @@ if($_POST) {
 			<p>
 				<!-- Creates button used to add new contact info -->
 				<button type="submit" class="btn btn-primary">Add Contact</button>
+			</p>
+		</form>
+		<form method="POST" enctype="multipart/form-data" class="form-inline" role="form">
+			<p>
+				<label for="file1">Upload a List: </label>
+				<input type="file" class="form-control" id="file1" name="file1">
+			</p>
+			<p id="uploadButton">
+				<input type="submit" value="Upload" class="btn btn-danger">
+			</p>
+			<p>
+				<?
+					// Check if we saved a file
+				 	if(isset($savedFilename)) {
+				 		// If it saved, show a link to the uploaded file
+				 		echo "<p>You can download your file <a href='/uploads/{$filename}'>here</a>.</p>";
+				 	}
+				?>
 			</p>
 		</form>
 	</body>
