@@ -1,37 +1,14 @@
 <?
 
-
-$items = [];
-
- foreach($_POST as $key => $value) {
-	array_push($items, $value);
-}
-
-function sanitize($items) {
-	foreach ($items as $key => $value) {
-		$items[$key] = htmlspecialchars(strip_tags($value));
-	}
-	return $items;
-}
-
-function saveFile($items, $filename = './data/items.txt') {
-	$array = sanitize($items);
-    $handle = fopen($filename, "w");
-    $string = implode("\n", $items);
-        fwrite($handle, $string);
-        fclose($handle);
-    }
-
- function openFile($filename = './data/items.txt') {
-        $handle = fopen($filename, "r");
-        $contents = fread($handle, filesize($filename));
-        $contentArray = explode(PHP_EOL, $contents);
-        fclose($handle);
-        return $contentArray;
- }
+require_once('../inc/todoListStore.php');
 	
+$DoList = new TodoList();
+$DoList->items = $DoList->openFile();
 
-$items = openFile();
+// Puts new list items onto the end of the list
+foreach($_POST as $key => $value) {
+		array_push($DoList->items, $value);
+	}
 
 if(count($_FILES) > 0 && $_FILES['file1']['error'] == UPLOAD_ERR_OK) { 
 	if($_FILES['file1']['type'] == 'text/plain') {
@@ -47,28 +24,35 @@ if(count($_FILES) > 0 && $_FILES['file1']['error'] == UPLOAD_ERR_OK) {
  		// move file from the temp location to our uploads directory
  		move_uploaded_file($_FILES['file1']['tmp_name'], $savedFilename);
 
- 		// Merge uploaded list with current list
- 		$newList = openFile($savedFilename);
- 		$items = array_merge($items, $newList);
- 		// save new list to file
- 		saveFile($items);
+ 		// Create new object for the uploaded array
+ 		$DoList2 = new ToDoList("../uploads/" . $filename);
+
+ 		// Open and read the uploaded array
+ 		$DoList2->items = $DoList2->openFile();
+
+ 		// Merge the present list with the one I uploaded
+ 		$DoList->items = array_merge($DoList->items, $DoList2->items);
+
+ 		// Save the merged list
+ 		$DoList->saveFile();
  	}
  	else {
  		echo "You can only upload text files.";
  	}
  }
 
-if(isset($_GET['id'])) {
-	$id = $_GET['id'];
-	unset($items[$id]);
-	saveFile($items);
-}
+ if(isset($_GET['id'])) {
+ 	unset($DoList->items[$_GET['id']]);
+ 	$DoList->items = array_values($DoList->items);
+ 	$DoList->saveFile();
+ }
 
 if(isset($_POST['add'])) {
 	$itemToAdd = $_POST['add'];
 	$items[] = $itemToAdd;
-	saveFile($items);
+	$DoList->saveFile();
 }
+
 ?>
 
 <html>
@@ -84,7 +68,7 @@ if(isset($_POST['add'])) {
 		<h1>TODO List</h1>
 		<div>
 			<ul class='text-center'>
-				<? foreach($items as $key => $value):  ?>
+				<? foreach($DoList->items as $key => $value):  ?>
 				<li><?= htmlspecialchars(strip_tags($value)); ?> | <a href="?id=<?php echo $key; ?>"> done </a></li>
 
 				<? endforeach ?>
