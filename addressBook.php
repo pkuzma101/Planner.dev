@@ -1,6 +1,6 @@
 <?php
 
-include '../inc/addressDataStore.php';
+require_once('../inc/addressDataStore.php');
 
 // Establish file where info will be saved
 
