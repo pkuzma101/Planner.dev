@@ -1,10 +1,7 @@
 $(document).ready(function() {
-	var first = $('#first').html();
-	alert(first);
 
-	var list = $('.list').html();
-	alert(list);
+	$('.codeup').css('border', '1px solid red');
 
-	var reasons = $('#reasons').html();
-	alert(reasons);
 });
+
+
