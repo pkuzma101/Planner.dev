@@ -1,12 +1,20 @@
 $(document).ready(function() {
-	$('li').css('font-size', '20px');
+	$('h1').click(function() {
+		$('h1').css('background-color', 'red');
+	});
 
-	$('h1').css('background-color', 'orange');
-	$('p').css('background-color', 'orange');
-	$('li').css('background-color', 'orange');
+	$('p').dblclick(function() {
+		$(this).css('font-size', '18px');
+	});
 
-	var codeup = $('#paragraph').html();
-	alert(codeup);
+	$('li').hover(
+			function() {
+				$(this).css('color', 'red');
+			},
+			function() {
+				$(this).css('color', 'black');
+			}
+			);
 });
 
 
