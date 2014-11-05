@@ -1,23 +1,14 @@
 $(document).ready(function() {
 
-	// Establish #disappear paragraph will receive the click-event
-	$('.disappear').click(function(event) {
-
-		// Prevent default action of link click
-		event.preventDefault();
-
-			// Toggle class on all dd's
-			$('dd').toggleClass('invisible');
+	$('#questions-toggle').click(function() {
+		$('#toggle').toggle();
 	});
 
-	$('ul').each(function() {
-		$(this).children().first().css('font-weight', 'bold');	
+	$('ul').click(function() {
+		$(this).children('li:first').hide();	
 	});
 
-	$('ul').click(function(event) {
-		event.preventDefault();
-			$(this).children().toggleClass().css('display', 'none');
-	});
+	$('li').css('cursor', 'images/openhand.jpg');
 
 	});
 		
