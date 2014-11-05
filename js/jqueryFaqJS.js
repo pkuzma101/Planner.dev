@@ -1,14 +1,12 @@
 $(document).ready(function() {
 
 	$('#questions-toggle').click(function() {
-		$('#toggle').toggle();
+		$('#toggle').fadeToggle();
 	});
 
 	$('ul').click(function() {
-		$(this).children('li:first').hide();	
+		$(this).children('li:first').fadeOut();	
 	});
-
-	$('li').css('cursor', 'images/openhand.jpg');
 
 	});
 		
