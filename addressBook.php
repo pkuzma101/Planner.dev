@@ -7,7 +7,7 @@ require_once('../inc/addressDataStore.php');
 // Create a new object $addressBook
 $addressBook = new addressDataStore();
 
-$addressBook->addresses = $addressBook->readAddressBook();
+$addressBook->readAddressBook();
 
 $error = "Please fill out all fields.";
 
@@ -80,7 +80,6 @@ if($_POST) {
 	
 		$addressBook->addresses[] = $newEntry;
 		$addressBook->writeAddressBook();
-
 	}
 }
 
