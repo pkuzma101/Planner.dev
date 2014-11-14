@@ -34,7 +34,7 @@ if(count($_FILES) > 0 && $_FILES['file1']['error'] == UPLOAD_ERR_OK) {
  		$DoList->items = array_merge($DoList->items, $DoList2->items);
 
  		// Save the merged list
- 		$DoList->saveFile();
+ 		$DoList->saveFile($DoList->items);
  	}
  	else {
  		echo "You can only upload text files.";
@@ -44,13 +44,13 @@ if(count($_FILES) > 0 && $_FILES['file1']['error'] == UPLOAD_ERR_OK) {
  if(isset($_GET['id'])) {
  	unset($DoList->items[$_GET['id']]);
  	$DoList->items = array_values($DoList->items);
- 	$DoList->saveFile();
+ 	$DoList->saveFile($DoList->items);
  }
 
 if(isset($_POST['add'])) {
 	$itemToAdd = $_POST['add'];
 	$items[] = $itemToAdd;
-	$DoList->saveFile();
+	$DoList->saveFile($items);
 }
 
 ?>
@@ -104,5 +104,6 @@ if(isset($_POST['add'])) {
 				</form>
 		</div>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+		<script src="js/todoList.js"></script>
 	</body>
 </html>

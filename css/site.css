@@ -1,30 +1,48 @@
 
 
-h1, h2, h3 {
+h1 {
 	color: #b20000;
+	font-family: 'Kaushan Script', cursive;
+	text-align: center;
+	font-size: 65px;
+	text-shadow: 8px 8px 8px #471603;
+}
+
+h3 {
+	color: #b20000;
+	font-family: 'Kaushan Script', cursive;
 	text-decoration: underline;
-	font-family: monospace;
 	text-align: center;
 }
 
+
 body {
-	background-image: url(http://img1.wikia.nocookie.net/__cb20121226163012/dynastywarriors/images/d/d5/WO3-Ryu_Hayabusa.png);
-	background-repeat: repeat;
+	background-image: url(../images/RyuHayabusa2.jpg);
+	background-size: cover;
 }
 
 ul {
-	color: white;
+	color: cbd64f;
 	list-style-type: circle;
-	text-align: center;
 	list-style-position: inside;
-	font-family: fantasy;
+	font-family: 'Josefin Sans', sans-serif;
+	font-size: 20px;
 }
 
 form {
 	text-align: center;
+	color: d6b938;
+}
+
+#addItem {
+	color: black;
 }
 
 button {
 	font-family: Century;
 	text-align: center;
+}
+
+#uploadButton {
+	color: black;
 }
