@@ -35,8 +35,7 @@ if(count($_FILES) > 0 && $_FILES['file1']['error'] == UPLOAD_ERR_OK) {
 
  		// Save the merged list
  		$DoList->saveFile($DoList->items);
- 	}
- 	else {
+ 	}else {
  		echo "You can only upload text files.";
  	}
  }
@@ -50,7 +49,7 @@ if(count($_FILES) > 0 && $_FILES['file1']['error'] == UPLOAD_ERR_OK) {
 if(isset($_POST['add'])) {
 	$itemToAdd = $_POST['add'];
 	$items[] = $itemToAdd;
-	$DoList->saveFile($items);
+	$DoList->saveFile($DoList->items);
 }
 
 ?>
