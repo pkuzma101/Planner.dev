@@ -1,11 +1,11 @@
 <?php
 
-require_once('../inc/addressDataStore.php');
+require_once('../inc/AddressDataStore.php');
 
 // Establish file where info will be saved
 
 // Create a new object $addressBook
-$addressBook = new addressDataStore();
+$addressBook = new AddressDataStore($filename = 'addressbook.csv');
 
 $addressBook->readAddressBook();
 
@@ -25,14 +25,14 @@ if(count($_FILES) > 0 && $_FILES['file1']['error'] == UPLOAD_ERR_OK) {
 
 	// Create the saved filename using the file's original name and our upload directory
 	$savedFilename = $uploadDir . $filename;
-
+	
 	// Move the file from the temp location to our uploads directory
 	move_uploaded_file($_FILES['file1']['tmp_name'], $savedFilename);
 	// Create new instance of object, give it the name $newAddressBook
-	$newAddressBook = new addressDataStore($filename);
+	$newAddressBook = new AddressDataStore('../data/' . $filename);
 	// Call the read function 
-	$newAddressBook->addresses = $newAddressBook->readAddressBook();
-	// Merge the $addresses variable from both objects
+	$newAddressBook->readAddressBook();
+	// Merge the $addresses variable from both objects	
 	$addressBook->addresses = array_merge($addressBook->addresses, $newAddressBook->addresses);
 	$addressBook->writeAddressBook();
 
