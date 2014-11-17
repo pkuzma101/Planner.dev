@@ -2,9 +2,8 @@
 
 require_once('../inc/todoListStore.php');
 	
-$DoList = new TodoList();
+$DoList = new TodoList('items.txt');
 $DoList->items = $DoList->openFile();
-
 // Puts new list items onto the end of the list
 foreach($_POST as $key => $value) {
 		array_push($DoList->items, $value);
