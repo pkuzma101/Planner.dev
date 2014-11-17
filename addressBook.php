@@ -58,30 +58,56 @@ if($_POST) {
 	else {
 
 	if(isset($_POST['name'])) {
-		$newEntry[] = $_POST['name'];
+		if(strlen($_POST['name']) > 125) {
+			throw new Exception('Entry is too long :(');
+		} else {
+			$newEntry[] = $_POST['name'];
+		}
 	}
 	if(isset($_POST['address'])) {
-		$newEntry[] = $_POST['address'];
+		if(strlen($_POST['address']) > 125) {
+			throw new Exception('Entry is too long :(');
+		} else {
+			$newEntry[] = $_POST['address'];
+		}	
 	}
 	if(isset($_POST['city'])) {
-		$newEntry[] = $_POST['city'];
+		if(strlen($_POST['city']) > 125) {
+			throw new Exception('Entry is too long :(');
+		} else {
+			$newEntry[] = $_POST['city'];
+		}
 	}
 	if(isset($_POST['state'])) {
-		$newEntry[] = $_POST['state'];
+		if(strlen($_POST['state']) > 125) {
+			throw new Exception('Entry is too long :(');
+		} else {
+			$newEntry[] = $_POST['state'];
+		}
 	}
 	if(isset($_POST['zip'])) {
-		$newEntry[] = $_POST['zip'];
+		if(strlen($_POST['zip']) > 125) {
+			throw new Exception('Entry is too long :(');
+		} else {
+			$newEntry[] = $_POST['zip'];
+		}
 	}
 	if(isset($_POST['phone'])) {
-		$newEntry[] = $_POST['phone'];
+		if(strlen($_POST['phone']) > 125) {
+			throw new Exception('Entry is too long :(');
+		} else {
+			$newEntry[] = $_POST['phone'];
+		}
 	}
 
 	// Takes all the form info just entered and pushes it onto the original array 
 	
 		$addressBook->addresses[] = $newEntry;
+		
 		$addressBook->writeAddressBook();
 	}
 }
+
 
 ?>
 

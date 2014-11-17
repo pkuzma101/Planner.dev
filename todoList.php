@@ -38,17 +38,30 @@ if(count($_FILES) > 0 && $_FILES['file1']['error'] == UPLOAD_ERR_OK) {
  		echo "You can only upload text files.";
  	}
  }
-
+// If the value of the list item is not null...
  if(isset($_GET['id'])) {
+ 	// Remove the item from the list
  	unset($DoList->items[$_GET['id']]);
+ 	// Rewrites the todo list with the removed item gone
  	$DoList->items = array_values($DoList->items);
+ 	// Saves the new list to a text file
  	$DoList->saveFile($DoList->items);
  }
 
+// If the value of the item being added is not null...
+
 if(isset($_POST['add'])) {
+	// Sets the $_POST function to a variable
 	$itemToAdd = $_POST['add'];
+	// Pushes the new item onto the array
 	$items[] = $itemToAdd;
-	$DoList->saveFile($DoList->items);
+	if(strlen($itemToAdd) > 240) {
+    	throw new Exception('Entry is too long :(');
+    } elseif(strlen($itemToAdd == 0)) {
+    	throw new Exception('Entry is blank :(');
+	} else {
+		$DoList->saveFile($DoList->items);
+	}
 }
 
 ?>
