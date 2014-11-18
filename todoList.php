@@ -4,10 +4,6 @@ require_once('../inc/todoListStore.php');
 	
 $DoList = new TodoList('items.txt');
 $DoList->items = $DoList->openFile();
-// Puts new list items onto the end of the list
-foreach($_POST as $key => $value) {
-		array_push($DoList->items, $value);
-	}
 
 if(count($_FILES) > 0 && $_FILES['file1']['error'] == UPLOAD_ERR_OK) { 
 	if($_FILES['file1']['type'] == 'text/plain') {
@@ -48,21 +44,29 @@ if(count($_FILES) > 0 && $_FILES['file1']['error'] == UPLOAD_ERR_OK) {
  	$DoList->saveFile($DoList->items);
  }
 
-// If the value of the item being added is not null...
 
+// If the value of the item being added is not null...
 if(isset($_POST['add'])) {
-	// Sets the $_POST function to a variable
-	$itemToAdd = $_POST['add'];
-	// Pushes the new item onto the array
-	$items[] = $itemToAdd;
-	if(strlen($itemToAdd) > 240) {
-    	throw new Exception('Entry is too long :(');
-    } elseif(strlen($itemToAdd == 0)) {
-    	throw new Exception('Entry is blank :(');
-	} else {
-		$DoList->saveFile($DoList->items);
+	try {
+		// Sends error message if entry is over 240 characters
+		if(strlen($_POST['add']) > 240) {
+	    	throw new Exception('Entry is too long');
+	    // Sends error message is entry is empty
+	    } elseif(strlen($_POST['add']) == 0) {
+	    	throw new Exception('Entry is blank');
+		}
+		// Sets the $_POST function to a variable
+		$itemToAdd = $_POST['add'];
+		// Pushes the new item onto the array
+		$items[] = $itemToAdd;
+		// If Exceptions are not triggered, save new list to the text file
+		$DoList->saveFile($DoList->items);  
+	} catch(Exception $e) {
+			$errorMessage = $e->getMessage();
+			echo "<div class='alert alert-info' role='alert'> $errorMessage </div>";
 	}
-}
+	
+} 
 
 ?>
 
