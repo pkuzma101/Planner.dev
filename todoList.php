@@ -50,18 +50,18 @@ if(isset($_POST['add'])) {
 	try {
 		// Sends error message if entry is over 240 characters
 		if(strlen($_POST['add']) > 240) {
-	    	throw new Exception('Entry is too long');
+	    	throw new InvalidInputException('Entry is too long');
 	    // Sends error message is entry is empty
 	    } elseif(strlen($_POST['add']) == 0) {
-	    	throw new Exception('Entry is blank');
+	    	throw new InvalidInputException('Entry is blank');
 		}
 		// Sets the $_POST function to a variable
 		$itemToAdd = $_POST['add'];
 		// Pushes the new item onto the array
 		$items[] = $itemToAdd;
-		// If Exceptions are not triggered, save new list to the text file
+		// Save new list to the text file
 		$DoList->saveFile($DoList->items);  
-	} catch(Exception $e) {
+	} catch(InvalidInputException $e) {
 			$errorMessage = $e->getMessage();
 			echo "<div class='alert alert-info' role='alert'> $errorMessage </div>";
 	}
