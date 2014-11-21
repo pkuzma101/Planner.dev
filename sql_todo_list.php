@@ -14,13 +14,14 @@ if(isset($_GET['list-item'])) {
 }
 
 if($_POST) {
-	if($_POST['add'] > 5) {
+	if($_POST['add'] > 75) {
 		echo "<div class='alert alert-info' role='alert'> Item too long, break into multiple items </div>";
 	} elseif(empty($_POST['add'])) {
 		echo "<div class='alert alert-info' role='alert'> Can't add a blank item </div>";
 	} else {
-		$query = $dbc->prepare("INSERT INTO items(content) VALUES(:content)");
+		$query = $dbc->prepare("INSERT INTO items(content, priority) VALUES(:content, :priority)");
 		$query->bindValue(':content', $_POST['add'], PDO::PARAM_STR);
+		$query->bindValue(':priority', $_POST['priority'], PDO:: PARAM_STR);
 		$query->execute();
 	}
 }
@@ -31,7 +32,7 @@ if(isset($itemToRemove)) {
 	$deletion->execute();
 }
 
-$stmt = $dbc->prepare("SELECT content, id FROM items");
+$stmt = $dbc->prepare("SELECT content, id, priority FROM items");
 $stmt->execute();
 
 $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -41,31 +42,40 @@ $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <html>
 	<head>
 		<title>TODO List</title>
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">	
 		<link href='http://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
 		<link href='http://fonts.googleapis.com/css?family=Josefin+Sans:400,400italic' rel='stylesheet' type='text/css'>
 		<link href="font-awesome-4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-		<link rel="stylesheet" type="text/css" href="/css/site.css">
+		<link rel="stylesheet" type="text/css" href="/css/sql_todo_list.css">
 	</head>
 	<body>
 		<h1>TODO List</h1>
 		<div>
 			<ul class='text-center'>
 				<? foreach($items as $value):  ?>
-					<li><?= htmlspecialchars(strip_tags($value['content'])); ?> | <a href="?list-item=<?php echo $value['id']; ?>"> done </a></li>
+					<li><?= htmlspecialchars(strip_tags($value['content'])); ?> - <?= $value['priority']; ?> | <a href="?list-item=<?php echo $value['id']; ?>"> done </a></li>
 				<? endforeach ?>
 			</ul>
 		</div>
 		<div>
 			<h3>Add Item to the List</h3>
-				<form method="POST" action="/sql_todo_list.php" id="addItem">
-					<p>
-						<input id="add" name="add" type="text" placeholder="Task to Add">
-					</p>
-					<p>
-						<button type="submit">Add Item</button>
-					</p>
-				</form>
+				<form method="POST" class="addItem" action="/sql_todo_list.php" role="form">
+						<p>
+							<input id="add" name="add" type="text" placeholder="Task to Add">
+						</p>
+
+						<p>
+							<select name="priority" id="priority">
+								<option value="Low">Low</option>
+								<option value="Medium">Medium</option>
+								<option value="High">High</option>
+							</select>
+						</p>
+
+						<p>
+							<button type="submit" class="btn btn-default">Add Item</button>
+						</p>
+				</form>	
 		</div>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 		<script src="js/todoList.js"></script>
