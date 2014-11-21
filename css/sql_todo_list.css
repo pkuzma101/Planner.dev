@@ -1,0 +1,44 @@
+
+
+h1 {
+	color: #b20000;
+	font-family: 'Kaushan Script', cursive;
+	text-align: center;
+	font-size: 65px;
+	text-shadow: 8px 8px 8px #471603;
+}
+
+h3 {
+	color: #b20000;
+	font-family: 'Kaushan Script', cursive;
+	text-decoration: underline;
+	text-align: center;
+}
+
+body {
+	background-image: url(../images/RyuHayabusa2.jpg);
+	background-size: cover;
+}
+
+ul {
+	color: #cbd64f;
+	list-style-type: circle;
+	list-style-position: inside;
+	font-family: 'Josefin Sans', sans-serif;
+	font-size: 20px;
+}
+
+.addItem {
+	font-family: 'Kaushan Script', cursive;
+	text-align: center;
+}
+
+.alert-info {
+color: #31708f;
+font-size: 20px;
+background-color: #d9edf7;
+border-color: #bce8f1;
+text-align: center;
+font-family: 'Kaushan Script', cursive;
+}
+
